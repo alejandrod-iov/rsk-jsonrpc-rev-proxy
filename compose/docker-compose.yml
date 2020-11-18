@@ -9,22 +9,22 @@ services:
       - traefik-json-proxy
     ports:
       - "80:80"
-      - "443:443"
-      
+    labels:
+      - "traefik.http.routers.redirs.rule=HostRegexp(`{host:.+}`)"
+      - "traefik.http.routers.redirs.middlewares=test-auth"
+      - "traefik.http.middlewares.test-auth.basicauth.usersFile=/usersFile"
     volumes:
       # Allow traefik to access docker api from the container
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/traefik.toml
-      - ./acme.json:/acme.json
+      - ./usersFile:/usersFile
     
   nginx:
     image: nginx
     networks:
       - traefik-json-proxy
     labels:
-      - "traefik.http.routers.nginx.rule=Host(`nginx.docker.localhost`)"
-      - "traefik.http.routers.nginx.entrypoints=websecure"
-      - "traefik.http.routers.nginx.tls=myresolver"
+      - "traefik.http.routers.nginx.rule=Host(`httpd.docker.localhost`) || Path(`/traefik`) || Query(`foo=bar`)"
     
   app:
     build: 
@@ -35,9 +35,7 @@ services:
     labels:
       - "traefik.http.routers.app.rule=Host(`app.docker.localhost`)"
       - "traefik.http.services.app.loadbalancer.server.port=8080"
-      - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.routers.app.tls=myresolver"
-      
+
 networks:
   traefik-json-proxy:
     driver: bridge
