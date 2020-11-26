@@ -7,6 +7,9 @@ services:
       dockerfile: Dockerfile.Testnet
     networks:
         - json-proxy
+    expose: 
+      - "4444:4444"
+      - "5050:5050"
       
 networks:
   json-proxy:
