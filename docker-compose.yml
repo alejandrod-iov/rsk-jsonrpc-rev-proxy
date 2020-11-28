@@ -9,6 +9,8 @@ services:
     ports:
       - "4444:4444"
       - "50505:50505/udp"
+    volumes:
+      - rskj-database:/var/lib/rsk/database
 
 volumes: 
   rskj-database:
