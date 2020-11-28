@@ -2,6 +2,7 @@ version: '3'
 
 services:
   node:
+    container_name: rskj-node
     build: 
       context: ./dockerfile/rskj
       dockerfile: Dockerfile.Testnet
