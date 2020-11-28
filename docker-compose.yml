@@ -11,10 +11,6 @@ services:
     ports: 
       - "4444:4444"
       - "5050:5050"
-    volumes:
-      - "./rsk.log:/var/log/rsk/rsk.log"
-      - "db-rskj:/var/lib/rsk/database/testnet"
-
 volumes: 
   db-rskj:
 networks:
