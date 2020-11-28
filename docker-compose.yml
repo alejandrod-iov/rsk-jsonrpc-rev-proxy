@@ -6,14 +6,9 @@ services:
       context: ./rskj
     container_name: rskj-node
     image: rskj:latest
-    command: --testnet
     ports:
-      - "3333:3333"
       - "4444:4444"
       - "50505:50505/udp"
-    volumes:
-#      - ./rsk.log:/code/rskj/logs/rsk.log
-      - rskj-database:/var/lib/rsk/database
 
 volumes: 
   rskj-database:

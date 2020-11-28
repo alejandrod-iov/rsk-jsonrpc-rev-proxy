@@ -2,43 +2,35 @@
 # RSK Node Dockerfile
 #
 
-FROM ubuntu:18.04
+# Pull base image.
+FROM ubuntu:latest
 
-ENV BRANCH="master"
-ENV CODENAME="SNAPSHOT"
-ENV VERSION="2.2.0"
+MAINTAINER RSK Release <support@rsk.co>
 
-RUN apt-get update -y && \
-    apt-get install -y git curl gnupg openjdk-11-jdk && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get autoremove -y && \
-    apt-get clean
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN gpg --keyserver https://secchannel.rsk.co/release.asc --recv-keys 1A92D8942171AFA951A857365DECF4415E3B8FA4
-RUN gpg --finger 1A92D8942171AFA951A857365DECF4415E3B8FA4
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends openjdk-8-jre supervisor systemd software-properties-common
 
-RUN git clone --single-branch --depth 1 --branch ${BRANCH} https://github.com/rsksmart/rskj.git /code/rskj
+# Install RSK.
+RUN groupadd --gid 888 rsk && useradd rsk -d /var/lib/rsk -s /sbin/nologin --uid=888 --gid=888
 
-WORKDIR /code/rskj
+RUN \
+  add-apt-repository -y ppa:rsksmart/rskj && \
+  apt-get update && \
+  (echo rskj shared/accepted-rsk-license-v1-1 select true | /usr/bin/debconf-set-selections )&& \
+  apt-get install -y --no-install-recommends rskj && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -f /etc/rsk/node.conf && \
+  ln -s /etc/rsk/testnet.conf /etc/rsk/node.conf
 
-RUN gpg --verify SHA256SUMS.asc
-RUN sha256sum --check SHA256SUMS.asc
-RUN ./configure.sh
-RUN ./gradlew --no-daemon clean build -x test
-
+# Supervisod CONF
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY node.conf /etc/rsk/node.conf
-COPY logback.xml /etc/rsk/logback.xml
-
 
 EXPOSE 4444
 EXPOSE 50505
 
-ENTRYPOINT [ "java", \
-    "-Xss4M", "-Xms2G", "-Xmx4G", \
-    "-Drsk.conf.file=/etc/rsk/node.conf", \
-    "-Dcom.sun.management.jmxremote", \
-    "-Dcom.sun.management.jmxremote.port=3333", \
-    "-Dcom.sun.management.jmxremote.ssl=false", \
-    "-Dcom.sun.management.jmxremote.authenticate=false", \
-    "-cp", "/code/rskj/rskj-core/build/libs/rskj-core-2.2.0-PAPYRUS-all.jar", \
-    "co.rsk.Start" ]
+# Define default command.
+CMD ["/usr/bin/supervisord"]
