@@ -6,6 +6,8 @@ services:
       context: ./rskj
     container_name: rskj-node
     image: rskj:latest
+    networks: 
+      - proxy
     ports:
       - "4444:4444"
       - "50505:50505/udp"
@@ -16,5 +18,5 @@ volumes:
   rskj-database:
     
 networks:
-  json-proxy:
+  proxy:
     driver: bridge
