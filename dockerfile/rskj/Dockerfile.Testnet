@@ -28,7 +28,7 @@ RUN \
 # Supervisod CONF
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY testnet.conf /etc/rsk/testnet.conf
-COPY logback.xml /etc/rsk/logback.xml
+#COPY logback.xml /etc/rsk/logback.xml
 
 EXPOSE 4444
 EXPOSE 50505
