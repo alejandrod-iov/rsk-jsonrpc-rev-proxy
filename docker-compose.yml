@@ -11,11 +11,12 @@ services:
       - "3333:3333"
       - "4444:4444"
       - "50505:50505/udp"
-#    volumes:
-#      - /var/log/rsk:/code/rskj/logs
+    volumes:
+#      - ./rsk.log:/code/rskj/logs/rsk.log
+      - rskj-database:/var/lib/rsk/database
 
 volumes: 
-  db-rskj:
+  rskj-database:
     
 networks:
   json-proxy:
