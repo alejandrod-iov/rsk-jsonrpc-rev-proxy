@@ -2,17 +2,21 @@ version: '3'
 
 services:
   node:
+    build:
+      context: ./rskj
     container_name: rskj-node
-    build: 
-      context: ./dockerfile/rskj
-      dockerfile: Dockerfile.Testnet
-    networks:
-        - json-proxy
-    ports: 
+    image: rskj:latest
+    command: --testnet
+    ports:
+      - "3333:3333"
       - "4444:4444"
-      - "5050:5050"
+      - "50505:50505/udp"
+#    volumes:
+#      - /var/log/rsk:/code/rskj/logs
+
 volumes: 
   db-rskj:
+    
 networks:
   json-proxy:
     driver: bridge
