@@ -15,10 +15,11 @@ services:
 
     volumes:
       - rskj-database:/var/lib/rsk/database
-      - ./rsk.log:/var/log/rsk/rsk.log
+      - rskj-log:/var/log/rsk/
 
 volumes: 
   rskj-database:
+  rskj-log:
     
 networks:
   proxy:
