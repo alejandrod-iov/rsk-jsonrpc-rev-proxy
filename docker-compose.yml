@@ -12,10 +12,10 @@ services:
       - "4444:4444"
       - "50505:50505/udp"
       - "50505:50505/tcp"
-      - "443:50505/tcp"
 
     volumes:
       - rskj-database:/var/lib/rsk/database
+      - ./rsk.log:/var/log/rsk/rsk.log
 
 volumes: 
   rskj-database:
