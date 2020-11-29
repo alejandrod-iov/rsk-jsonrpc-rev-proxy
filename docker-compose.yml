@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  node:
+  rskj-node:
     build:
       context: ./rskj
     container_name: rskj-node
