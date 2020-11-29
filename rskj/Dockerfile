@@ -25,11 +25,13 @@ RUN \
   rm -f /etc/rsk/node.conf && \
   ln -s /etc/rsk/testnet.conf /etc/rsk/node.conf
 
-RUN mkdir /var/lib/rsk/database && chown rsk:rsk /var/lib/rsk/database
+RUN mkdir /var/lib/rsk/database && \
+  chown rsk:rsk /var/lib/rsk/database
 
 # Supervisod CONF
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY node.conf /etc/rsk/node.conf
+COPY logback.xml /etc/rsk/logback.xml
 
 EXPOSE 4444
 EXPOSE 50505
