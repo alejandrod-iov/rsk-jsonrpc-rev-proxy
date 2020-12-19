@@ -34,9 +34,9 @@ services:
       - rskj-log:/var/log/rsk/
     labels:
       - "traefik.http.routers.rskj-node.rule=Host(`rskj.ipforward.co`)"
-      - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
       - "traefik.http.routers.rskj-node.entrypoints=websecure"
       - "traefik.http.routers.rskj-node.tls.certresolver=rskj"
+      - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
 
 volumes: 
   rskj-database:
