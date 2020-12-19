@@ -1,13 +1,14 @@
 [entryPoints]
   [entryPoints.web]
     address = ":80"
+
   [entryPoints.websecure]
     address = ":443"
 
 [certificatesResolvers.rskj.acme]
   email = "alejandro.drabenche@iovlabs.com"
   storage = "/acme.json"
-  [certificatesResolvers.myresolver.acme.httpChallenge]
+  [certificatesResolvers.rskj.acme.httpChallenge]
     entryPoint = "web"
 
 [providers]
