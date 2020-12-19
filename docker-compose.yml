@@ -15,7 +15,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/traefik.toml
-      #- ./acme.json:/acme.json
+      - ./acme.json:/acme.json
 
   rskj-node:
     build:
@@ -34,6 +34,7 @@ services:
       - rskj-log:/var/log/rsk/
     labels:
       - "traefik.http.routers.rskj-node.rule=Host(`rskj.ipforward.co`)"
+      - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
       - "traefik.http.routers.rskj-node.entrypoints=websecure"
       - "traefik.http.routers.rskj-node.tls.certresolver=rskj"
 
