@@ -3,7 +3,7 @@ version: '3'
 services:
   reverse-proxy:
     container_name: json-reverse-proxy
-    image: traefik:v2.3
+    image: traefik:latest
     command: --api.insecure=true
     networks:
       - proxys
