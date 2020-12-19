@@ -6,14 +6,13 @@ services:
     image: traefik:v2.3
     command: --api.insecure=true
     networks:
-      - traefik-json-proxy
+      - proxys
     ports:
       - "80:80"
       - "443:443"
     networks: 
       - proxy
     volumes:
-      # Allow traefik to access docker api from the container
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/traefik.toml
       - ./acme.json:/acme.json
@@ -34,9 +33,9 @@ services:
       - rskj-database:/var/lib/rsk/database
       - rskj-log:/var/log/rsk/
     labels:
-      - "traefik.http.routers.nginx.rule=Host(`rskj.ipforward.co`)"
-      - "traefik.http.routers.nginx.entrypoints=websecure"
-      - "traefik.http.routers.nginx.tls.certresolver=rskj"
+      - "traefik.http.routers.rskj-node.rule=Host(`rskj.ipforward.co`)"
+      - "traefik.http.routers.rskj-node.entrypoints=websecure"
+      - "traefik.http.routers.rskj-node.tls.certresolver=rskj"
 
 volumes: 
   rskj-database:
