@@ -22,8 +22,7 @@ RUN \
   apt-get install -y --no-install-recommends rskj && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
-  rm -f /etc/rsk/node.conf && \
-  ln -s /etc/rsk/testnet.conf /etc/rsk/node.conf
+  rm -f /etc/rsk/node.conf 
 
 RUN mkdir /var/lib/rsk/database && \
   chown rsk:rsk /var/lib/rsk/database
