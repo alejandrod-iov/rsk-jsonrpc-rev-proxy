@@ -1,0 +1,18 @@
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[certificatesResolvers.rskj.acme]
+  email = "mail@domain.com"
+  storage = "/acme.json"
+  [certificatesResolvers.rskj.acme.httpChallenge]
+    entryPoint = "web"
+
+[providers]
+  [providers.docker]
+    endpoint = "unix:///var/run/docker.sock"
+[log]
+  level = "DEBUG"
