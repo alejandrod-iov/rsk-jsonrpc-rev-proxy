@@ -11,8 +11,8 @@
   [certificatesResolvers.rskj.acme.httpChallenge]
     entryPoint = "web"
 
-# Here, an average of 100 requests per second is allowed.
-# In addition, a burst of 50 requests is allowed.
+# Here, an average of 200 requests per minute is allowed.
+# In addition, a burst of 10 requests is allowed.
 [http.middlewares]
   [http.middlewares.test-ratelimit.rateLimit]
     average = 200
