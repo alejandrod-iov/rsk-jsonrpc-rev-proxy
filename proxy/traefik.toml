@@ -1,0 +1,26 @@
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[certificatesResolvers.rskj.acme]
+  email = "mail@domain.com"
+  storage = "/acme.json"
+  [certificatesResolvers.rskj.acme.httpChallenge]
+    entryPoint = "web"
+
+# Here, an average of 100 requests per second is allowed.
+# In addition, a burst of 50 requests is allowed.
+[http.middlewares]
+  [http.middlewares.test-ratelimit.rateLimit]
+    average = 200
+    period = 1m
+    burst = 10
+
+[providers]
+  [providers.docker]
+    endpoint = "unix:///var/run/docker.sock"
+[log]
+  level = "DEBUG"

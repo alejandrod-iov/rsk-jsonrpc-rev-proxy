@@ -1,0 +1,51 @@
+# By default, the docker-compose command will look for a file named .env
+version: '3'
+
+services:
+  reverse-proxy:
+    container_name: json-reverse-proxy
+    image: traefik:${TAG}
+    command: --api.insecure=${API_INSECURE}
+    networks:
+      - proxys
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    networks: 
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./proxy/traefik.toml:/traefik.toml
+      - ./proxy/acme.json:/acme.json
+
+  rskj-node:
+    build:
+      context: ./rskj
+    container_name: rskj-node
+    image: rskj:latest
+    networks: 
+      - proxy
+    ports:
+      - "4444:4444"
+      - "50505:50505/udp"
+      - "50505:50505/tcp"
+      - "5050:5050/udp"
+      - "5050:5050/tcp"
+
+    volumes:
+      - rskj-database:/var/lib/rsk/database
+      - rskj-log:/var/log/rsk/
+    labels:
+      - "traefik.http.routers.rskj-node.rule=Host(`${NODE_URL}`)"
+      - "traefik.http.routers.rskj-node.entrypoints=${RSKJ_ENTRYPOINT}"
+      - "traefik.http.routers.rskj-node.tls.certresolver=${TLS_CERTRESOLVER}"
+      - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
+
+volumes: 
+  rskj-database:
+  rskj-log:
+    
+networks:
+  proxy:
+    driver: bridge
