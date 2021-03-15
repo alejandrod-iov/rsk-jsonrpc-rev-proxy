@@ -6,21 +6,27 @@
     address = ":443"
 
 [certificatesResolvers.rskj.acme]
-  email = "mail@domain.com"
+  email = "mail@example.com"
   storage = "/acme.json"
   [certificatesResolvers.rskj.acme.httpChallenge]
     entryPoint = "web"
 
-# Here, an average of 200 requests per minute is allowed.
-# In addition, a burst of 10 requests is allowed.
 [http.middlewares]
   [http.middlewares.test-ratelimit.rateLimit]
     average = 200
-    period = 1m
+    period = 60
     burst = 10
 
 [providers]
   [providers.docker]
     endpoint = "unix:///var/run/docker.sock"
+
+[pilot]
+  token = ""
+
 [log]
   level = "DEBUG"
+
+[experimental.plugins.traefik-forced-body-plugin]
+  moduleName = "github.com/benoitg31/traefik-forced-body-plugin"
+  version = "v0.1.4"

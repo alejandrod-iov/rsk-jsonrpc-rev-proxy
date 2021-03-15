@@ -5,7 +5,9 @@ services:
   reverse-proxy:
     container_name: json-reverse-proxy
     image: traefik:${TAG}
-    command: --api.insecure=${API_INSECURE}
+    command: 
+      - "--api.insecure=${API_INSECURE}"
+
     networks:
       - proxys
     ports:
@@ -37,15 +39,20 @@ services:
       - rskj-database:/var/lib/rsk/database
       - rskj-log:/var/log/rsk/
     labels:
-      - "traefik.http.routers.rskj-node.rule=Host(`${NODE_URL}`)"
+      - "traefik.http.routers.rskj-node.rule=Host(`${NODE_URL}`) && Method(`POST`) && Headers(`Content-Type`,`application/json`)"
       - "traefik.http.routers.rskj-node.entrypoints=${RSKJ_ENTRYPOINT}"
       - "traefik.http.routers.rskj-node.tls.certresolver=${TLS_CERTRESOLVER}"
       - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
+      - "traefik.http.routers.rskj-not-allowed-method.rule=Host(`${NODE_URL}`)&& Method(`GET`,`PUT`,`DELETE`, `PATCH`, `HEAD`) && Headers(`Content-Type`,`application/json`)"
+      - "traefik.http.routers.rskj-not-allowed-method.entrypoints=${RSKJ_ENTRYPOINT}"
+      - "traefik.http.routers.rskj-not-allowed-method.tls.certresolver=${TLS_CERTRESOLVER}"
+      - "traefik.http.routers.rskj-not-allowed-method.middlewares=my-static"
+      - "traefik.http.middlewares.my-static.plugin.traefik-forced-body-plugin.body={\"jsonrpc\":\"2.0\",\"id\": null,\"error\":{\"message\":\"method not allowed\"}}\n"
 
 volumes: 
   rskj-database:
   rskj-log:
-    
+        
 networks:
   proxy:
-    driver: bridge
+    driver: bridge 
