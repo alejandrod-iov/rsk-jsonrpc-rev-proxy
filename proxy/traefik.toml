@@ -16,7 +16,7 @@
 [http.middlewares]
   [http.middlewares.test-ratelimit.rateLimit]
     average = 200
-    period = 1m
+    period = 60
     burst = 10
 
 [providers]
