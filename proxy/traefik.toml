@@ -25,7 +25,7 @@
   [http.middlewares.rewrite-foo.plugin.rewritebody]
     lastModified = true
     [[http.middlewares.rewrite-foo.plugin.rewritebody.rewrites]]
-      regex = "*"
+      regex = "foo"
       replacement = "Use POST"
 
 [providers]
