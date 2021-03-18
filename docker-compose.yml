@@ -37,7 +37,7 @@ services:
       - rskj-database:/var/lib/rsk/database
       - rskj-log:/var/log/rsk/
     labels:
-      - "traefik.http.routers.rskj-node.rule=Host(`${NODE_URL}`) && Method(`POST`) && Headers(`Content-Type`,`application/json`)"
+      - "traefik.http.routers.rskj-node.rule=Host(`${NODE_URL}`)"
       - "traefik.http.routers.rskj-node.entrypoints=${RSKJ_ENTRYPOINT}"
       - "traefik.http.routers.rskj-node.tls.certresolver=${TLS_CERTRESOLVER}"
       - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
