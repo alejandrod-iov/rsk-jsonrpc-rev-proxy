@@ -5,7 +5,9 @@ services:
   reverse-proxy:
     container_name: json-reverse-proxy
     image: traefik:${TAG}
-    command: --api.insecure=${API_INSECURE}
+    command: 
+      - --api.insecure=${API_INSECURE}
+      - --experimental.pilot.token=${PILOT_TOKEN}
     networks:
       - proxys
     ports:

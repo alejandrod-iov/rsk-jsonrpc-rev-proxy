@@ -26,7 +26,7 @@
   level = "INFO"
 
 [pilot]
-  token = "xxxx"
+  token = "e907b219-be49-4c2e-85c2-862d1d82220b"
 
 [experimental.plugins.rewritebody]
   modulename = "github.com/traefik/plugin-rewritebody"
