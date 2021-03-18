@@ -44,7 +44,6 @@ services:
       - "traefik.http.routers.rskj-node.tls.certresolver=${TLS_CERTRESOLVER}"
       - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
 
-
 volumes: 
   rskj-database:
   rskj-log:

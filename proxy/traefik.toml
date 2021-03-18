@@ -11,13 +11,22 @@
   [certificatesResolvers.rskj.acme.httpChallenge]
     entryPoint = "web"
 
-# Here, an average of 200 requests per minute is allowed.
-# In addition, a burst of 10 requests is allowed.
+[http.routers.my-router]
+    rule = "HostMethod(`GET`)"
+    middlewares = ["rewrite-foo"]
+    service = "rskj-node"
+
 [http.middlewares]
   [http.middlewares.test-ratelimit.rateLimit]
     average = 200
     period = 60
     burst = 10
+
+  [http.middlewares.rewrite-foo.plugin.rewritebody]
+    lastModified = true
+    [[http.middlewares.rewrite-foo.plugin.rewritebody.rewrites]]
+      regex = "*"
+      replacement = "Use POST"
 
 [providers]
   [providers.docker]
@@ -25,9 +34,10 @@
 [log]
   level = "INFO"
 
-[pilot]
-  token = "e907b219-be49-4c2e-85c2-862d1d82220b"
-
 [experimental.plugins.rewritebody]
   modulename = "github.com/traefik/plugin-rewritebody"
   version = "v0.3.1"
+
+[experimental.plugins.rco]
+  moduleName = "github.com/Lepkem/traefik-plugin-response-code-override"
+  version = "v0.0.3"
