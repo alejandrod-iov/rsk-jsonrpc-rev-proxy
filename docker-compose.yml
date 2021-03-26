@@ -6,8 +6,7 @@ services:
     container_name: json-reverse-proxy
     image: traefik:${TAG}
     command: 
-      - --api.insecure=${API_INSECURE}
-      - --experimental.pilot.token=${PILOT_TOKEN}
+      - "--api.insecure=${API_INSECURE}"
     networks:
       - proxys
     ports:
@@ -39,10 +38,21 @@ services:
       - rskj-database:/var/lib/rsk/database
       - rskj-log:/var/log/rsk/
     labels:
-      - "traefik.http.routers.rskj-node.rule=Host(`${NODE_URL}`)"
+      - "traefik.http.routers.rskj-node.rule=Host(`${NODE_URL}`) && Method(`POST`) && Headers(`Content-Type`,`application/json`)"
       - "traefik.http.routers.rskj-node.entrypoints=${RSKJ_ENTRYPOINT}"
       - "traefik.http.routers.rskj-node.tls.certresolver=${TLS_CERTRESOLVER}"
       - "traefik.http.services.rskj-node.loadbalancer.server.port=4444"
+      - "traefik.http.routers.whoami2.rule=Host(`${NODE_URL}`)&& Method(`GET`,`PUT`,`DELETE`, `PATCH`, `HEAD`) && Headers(`Content-Type`,`application/json`)"
+      - "traefik.http.routers.whoami2.entrypoints=${RSKJ_ENTRYPOINT}"
+      - "traefik.http.routers.whoami2.tls.certresolver=${TLS_CERTRESOLVER}"
+      - "traefik.http.routers.whoami2.middlewares=return-message"
+      - "traefik.http.middlewares.return-message.chain.middlewares=my-static"
+      - "traefik.http.middlewares.my-static.plugin.traefik-forced-body-plugin.body={\"jsonrpc\":\"2.0\",\"id\": null,\"error\":{\"message\":\"POST method only allowed\"}}\n"
+        #      - "traefik.http.middlewares.my-rco.plugin.rco.RemoveBody=false"
+        #- "traefik.http.middlewares.my-rco.plugin.rco.Overrides='200': 405"
+        #- "traefik.http.middlewares.my-rewrite.plugin.plugin-rewrite.lastModified=true"
+        #- "traefik.http.middlewares.my-rewrite.plugin.plugin-rewrite.rewrites[0].regex=(.*)"
+        #- "traefik.http.middlewares.my-rewrite.plugin.plugin-rewrite.rewrites[0].replacement=\nID\n"
 
 volumes: 
   rskj-database:

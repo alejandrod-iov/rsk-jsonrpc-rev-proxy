@@ -3,8 +3,9 @@ FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends openjdk-11-jre supervisor systemd software-properties-common
+RUN apt-get update && \
+apt-get install -y --no-install-recommends openjdk-11-jre supervisor systemd software-properties-common
+
 
 # Install RSK.
 RUN groupadd --gid 888 rsk && useradd rsk -d /var/lib/rsk -s /sbin/nologin --uid=888 --gid=888
