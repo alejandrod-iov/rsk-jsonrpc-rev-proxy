@@ -6,7 +6,7 @@
     address = ":443"
 
 [certificatesResolvers.rskj.acme]
-  email = "alejandro.drabenche@iovlabs.org"
+  email = "mail@example.com"
   storage = "/acme.json"
   [certificatesResolvers.rskj.acme.httpChallenge]
     entryPoint = "web"
@@ -20,8 +20,6 @@
 [providers]
   [providers.docker]
     endpoint = "unix:///var/run/docker.sock"
-[log]
-  level = "INFO"
 
 [experimental.plugins.traefik-forced-body-plugin]
   moduleName = "github.com/benoitg31/traefik-forced-body-plugin"

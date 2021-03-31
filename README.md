@@ -81,6 +81,7 @@ Open the `.env` file and edit as follows
 * **TAG**: Tag of the traefik docker image.
 * **RSKJ_ENTRYPOINT**: Enter **web**: Set this entrypoint to this one to enable the access via http. In the next section we are going to specify in `docker-compose.yml` file to use this one.
 * **TLS_CERTRESOLVER**: This is not used in http. So feel free to comment this line.
+* **LOG_LEVEL**: Logging LOG LEVEL.
 * **PILOT_TOKEN**: The Token to access the plugin/s. Refer to [Before start](#before-start) section.
 
 ## Remove the cert issuing section
