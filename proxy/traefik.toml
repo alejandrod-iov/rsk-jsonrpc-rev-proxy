@@ -23,17 +23,6 @@
 [log]
   level = "INFO"
 
-[pilot]
-  token = "4f343503-c989-4243-aee8-9658a6f07d71"
-
-[experimental.plugins.plugin-rewrite]
-  modulename = "github.com/traefik/plugin-rewritebody"
-  version = "v0.3.1"
-
-[experimental.plugins.rco]
-  modulename = "github.com/Lepkem/traefik-plugin-response-code-override"
-  version = "v0.0.3"
-
 [experimental.plugins.traefik-forced-body-plugin]
   moduleName = "github.com/benoitg31/traefik-forced-body-plugin"
   version = "v0.1.4"
