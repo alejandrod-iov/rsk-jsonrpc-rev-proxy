@@ -8,7 +8,7 @@
 
 You need to install the following tools:
 
-* Trefik pilot token. You can create a pilot user [here](https://pilot.traefik.io/) and/or refer to documentation [here](https://doc.traefik.io/traefik-pilot/)
+* Trefik pilot token. You can create a pilot user [here](https://pilot.traefik.io/) and/or refer to documentation [here](https://doc.traefik.io/traefik-pilot/). This is required by traefik to use the plugins.
 * git
 * docker-compose
 * Working domain accesible from Internet. For instance, you can get the Ip address executing the following command:
@@ -53,7 +53,6 @@ Open the `.env` file and edit as follows
 * **TAG**: Tag of the traefik docker image.
 * **RSKJ_ENTRYPOINT**: Enter **websecure**. This entrypoint is to setup as a monolitic standalone https rsk node. This option will usually fit if you have a box directly connected to the internet.
 * **TLS_CERTRESOLVER**: Is the resolver under `traefik.toml`. Usually leave it as it is, unless you know what you are doing. 
-* **PILOT_TOKEN**: The Token to access the plugin/s. Refer to [Before start](#before-start) section.
 
 ## Setup the traefik container configuration files
 
@@ -81,7 +80,6 @@ Open the `.env` file and edit as follows
 * **TAG**: Tag of the traefik docker image.
 * **RSKJ_ENTRYPOINT**: Enter **web**: Set this entrypoint to this one to enable the access via http. In the next section we are going to specify in `docker-compose.yml` file to use this one.
 * **TLS_CERTRESOLVER**: This is not used in http. So feel free to comment this line.
-* **LOG_LEVEL**: Logging LOG LEVEL.
 
 ## Remove the cert issuing section
 On `proxy/traefik.toml` 
@@ -94,7 +92,7 @@ On `proxy/traefik.toml`
   [certificatesResolvers.rskj.acme.httpChallenge]
     entryPoint = "web"
 ```
-* Complete with your pilot token. Refer to [Before start](#before-start)
+* Complete with your pilot token. Refer to [Before start](#before-start) section
 ```toml
 [pilot]
   token = "YOUR_TOKEN_NUMBER"
