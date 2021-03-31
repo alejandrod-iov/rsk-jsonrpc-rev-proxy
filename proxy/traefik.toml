@@ -21,6 +21,6 @@
   [providers.docker]
     endpoint = "unix:///var/run/docker.sock"
 
-[experimental.plugins.traefik-forced-body-plugin]
-  moduleName = "github.com/benoitg31/traefik-forced-body-plugin"
-  version = "v0.1.4"
+[experimental.plugins.forcedbody]
+  modulename = "github.com/benoitg31/traefik-forced-plugin"
+  version = "v1.0.2"
