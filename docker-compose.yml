@@ -23,7 +23,7 @@ services:
       - ./proxy/traefik.toml:/traefik.toml
       - ./proxy/acme.json:/acme.json
 
-    rskj-node:
+  rskj-node:
     build:
       context: ./rskj
     container_name: rskj-node
