@@ -7,7 +7,6 @@ services:
     image: traefik:${TAG}
     command: 
       - "--api.insecure=${API_INSECURE}"
-      - "--pilot.token=${PILOT_TOKEN}"
       - "--log.level=${LOG_LEVEL}"
 
     networks:

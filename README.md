@@ -82,10 +82,10 @@ Open the `.env` file and edit as follows
 * **RSKJ_ENTRYPOINT**: Enter **web**: Set this entrypoint to this one to enable the access via http. In the next section we are going to specify in `docker-compose.yml` file to use this one.
 * **TLS_CERTRESOLVER**: This is not used in http. So feel free to comment this line.
 * **LOG_LEVEL**: Logging LOG LEVEL.
-* **PILOT_TOKEN**: The Token to access the plugin/s. Refer to [Before start](#before-start) section.
 
 ## Remove the cert issuing section
-On `proxy/traefik.toml` remove the following section
+On `proxy/traefik.toml` 
+* Remove the following section
 
 ```toml
 [certificatesResolvers.rskj.acme]
@@ -93,6 +93,11 @@ On `proxy/traefik.toml` remove the following section
   storage = "/acme.json"
   [certificatesResolvers.rskj.acme.httpChallenge]
     entryPoint = "web"
+```
+* Complete with your pilot token. Refer to [Before start](#before-start)
+```toml
+[pilot]
+  token = "YOUR_TOKEN_NUMBER"
 ```
 
 ## Setup the entrypoints
