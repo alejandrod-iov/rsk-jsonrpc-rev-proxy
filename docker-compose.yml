@@ -49,7 +49,6 @@ services:
       - "traefik.http.routers.rskj-not-allowed-method.entrypoints=${RSKJ_ENTRYPOINT}"
       - "traefik.http.routers.rskj-not-allowed-method.tls.certresolver=${TLS_CERTRESOLVER}"
       - "traefik.http.routers.rskj-not-allowed-method.middlewares=my-static"
-      - "traefik.http.middlewares.return-message.chain.middlewares=my-static"
       - "traefik.http.middlewares.my-static.plugin.traefik-forced-body-plugin.body={\"jsonrpc\":\"2.0\",\"id\": null,\"error\":{\"message\":\"method not allowed\"}}\n"
 
 volumes: 
