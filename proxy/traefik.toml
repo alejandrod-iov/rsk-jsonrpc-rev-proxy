@@ -24,6 +24,9 @@
 [pilot]
   token = ""
 
-[experimental.plugins.forcedbody]
-  modulename = "github.com/benoitg31/traefik-forced-plugin"
-  version = "v1.0.2"
+[log]
+  level = "DEBUG"
+
+[experimental.plugins.traefik-forced-body-plugin]
+  moduleName = "github.com/benoitg31/traefik-forced-body-plugin"
+  version = "v0.1.4"

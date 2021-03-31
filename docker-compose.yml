@@ -7,7 +7,6 @@ services:
     image: traefik:${TAG}
     command: 
       - "--api.insecure=${API_INSECURE}"
-      - "--log.level=${LOG_LEVEL}"
 
     networks:
       - proxys
